@@ -1,0 +1,70 @@
+extends includes/layout
+
+block headlink
+  title 编码
+
+block content
+  div(class='container')
+    div(class='table-responsive')
+      table(class='table table-striped table-bordered table-hover')
+        thead
+          tr
+            th 序号
+            th 名称
+            th 年份
+            th 国家
+            th 评论数
+            th 返回
+        tbody
+          tr
+            td= play[id-1].id
+            td= play[id-1].name
+            td= play[id-1].year
+            td= play[id-1].country
+            td= play[id-1].comment
+            td
+              a(role="button", href="/", class="btn btn-primary")
+                | 返回
+      hr
+      table(class='table table-striped table-bordered table-hover')
+        thead
+          tr
+            th 序号
+            th 姓名
+            th 打分
+            th 有用
+            th 评论
+            th C1
+            th C2
+            th C3
+            th C4
+            th C5
+            th C6
+            th C7
+            th C8
+            th C9
+            th C10
+            th C11
+        tbody
+          - for (var i=0;i<comment.length;i++)
+            if comment[i].showid == id
+              tr
+                td
+                  a(href="/comment/" + id + "/" + comment[i].commentid)
+                    = comment[i].commentid
+                td= comment[i].name
+                td= comment[i].score
+                td= comment[i].usefulness
+                td= comment[i].text
+                td= comment[i].C1
+                td= comment[i].C2
+                td= comment[i].C3
+                td= comment[i].C4
+                td= comment[i].C5
+                td= comment[i].C6
+                td= comment[i].C7
+                td= comment[i].C8
+                td= comment[i].C9
+                td= comment[i].C10
+                td= comment[i].C11
+

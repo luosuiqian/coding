@@ -1,0 +1,157 @@
+extends includes/layout
+
+block headlink
+  title 编码
+
+block content
+  div(class='container')
+    div(class='table-responsive')
+      table(class='table table-striped table-bordered table-hover')
+        thead
+          tr
+            th 序号
+            th 名称
+            th 年份
+            th 国家
+            th 评论数
+            th 返回
+        tbody
+          tr
+            td= play[id-1].id
+            td= play[id-1].name
+            td= play[id-1].year
+            td= play[id-1].country
+            td= play[id-1].comment
+            td
+              a(role="button", href="/play/" + id, class="btn btn-primary")
+                | 返回
+      hr
+      table(class='table table-striped table-bordered table-hover')
+        thead
+          tr
+            th 序号
+            th 姓名
+            th 打分
+            th 有用
+            th 评论
+            th C1
+            th C2
+            th C3
+            th C4
+            th C5
+            th C6
+            th C7
+            th C8
+            th C9
+            th C10
+            th C11
+        tbody
+          - for (var i=0;i<comment.length;i++)
+            if comment[i].showid == id && comment[i].commentid == commentid
+              tr
+                td= commentid
+                td= comment[i].name
+                td= comment[i].score
+                td= comment[i].usefulness
+                td= comment[i].text
+                td(id='c1')= comment[i].C1
+                td(id='c2')= comment[i].C2
+                td(id='c3')= comment[i].C3
+                td(id='c4')= comment[i].C4
+                td(id='c5')= comment[i].C5
+                td(id='c6')= comment[i].C6
+                td(id='c7')= comment[i].C7
+                td(id='c8')= comment[i].C8
+                td(id='c9')= comment[i].C9
+                td(id='c10')= comment[i].C10
+                td(id='c11')= comment[i].C11
+    h3(id='prob')
+    p(id='choice')
+  
+  - var url = '/comment/' + id + '/' + commentid
+  script(type='text/javascript').
+    var now = 1;
+    var words = [
+      "",
+      "C1.身体特征，包括：外貌、穿着、身材、声音、气质（只讨论外形、声音等身体特征） 1=不认可(J) 2=没提及(K) 3=认可(L)",
+      "C2.角色称谓（提到男主女主、男一女一的类似称谓编为3） 1=没提及(J) 2=演员名(K) 3=角色名(L)",
+      "C3.当成认识的人（评论者有没有把涉当做认识的人） 1=没有(J) 2=昵称(K) 3=喊话(L)",
+      "C4.对角色的认同，是否对所谈论主要角色（外形/心理/行为）进行分析并表示认同 1=不认同(J) 2=没提及(K) 3=认同(L)",
+      "C5.角色成败（评论者对角色成败的态度，包括角色事业、爱情、国仇家恨等结果的期待） 1=希望失败(J) 2=没提及(K) 3=希望成功(L)",
+      "C6.希望成为或拥有特征（是否对想要成为某个角色或拥有某个角色的特征） 1=不希望(J) 2=未提及(K) 3=希望(L)",
+      "C7.认同理解剧情发展（能否认同/理解剧情的发展） 1=不能(J) 2=能(K)",
+      "C8.因剧情触动情绪(是否会因为剧情内容本身而触动某种情绪——提到剧情且同时提到情绪) 1=没有(J) 2=有(K)",
+      "C9.因剧情联想到生活（本评论者有没有从剧情内容而联想到现实生活） 1=没有(J) 2=有(K)",
+      "C10.想知道剧情发展（本评论者是否想知道后面剧情的发展） 1=没有(J) 2=有(K)",
+      "C11.情感类型（一条短评的主要情感表达类型最主要的依据是整体语义，并非某种情感的词汇或句子数量。） 0=没有表达(H) 1=满意-高兴(J) 2=厌恶-恐惧(K) 3=强硬-愤怒(L) 4=失望-悲伤(;)",
+      "提交(F)",
+    ];
+    var fresh = function() {
+      if (1<=now && now<=12) {
+        str = words[now].split(" ");
+        $("#prob").text(str[0]);
+        var cho = "";
+        for (var i=1;i<str.length;i++) {
+          cho += str[i] + "&nbsp;&nbsp;&nbsp;&nbsp;";
+        }
+        cho += "上一题(A)";
+        $("#choice").html(cho);
+      }
+    };
+    var submit = function() {
+      $.ajax({
+        url: "#{url}",
+        data: {C1: $("#c1").text(), C2: $("#c2").text(), C3: $("#c3").text(), C4: $("#c4").text(),
+               C5: $("#c5").text(), C6: $("#c6").text(), C7: $("#c7").text(), C8: $("#c8").text(),
+               C9: $("#c9").text(), C10: $("#c10").text(), C11: $("#c11").text()},
+        type: "POST",
+        dataType: "json",
+        success: function(m) {
+          $(location).attr('href', m.url);
+        },
+        error: function(xhr, status, errorThrown) {
+        },
+      });
+    };
+    $(document).keypress(function(e) {
+      switch (e.which) {
+        case 104:
+          if (now<=11) {
+            $("#c" + now).text("0");
+            now++;
+          }
+          break;
+        case 106:
+          if (now<=11) {
+            $("#c" + now).text("1");
+            now++;
+          }
+          break;
+        case 107:
+          if (now<=11) {
+            $("#c" + now).text("2");
+            now++;
+          }
+          break;
+        case 108:
+          if (now<=11) {
+            $("#c" + now).text("3");
+            now++;
+          }
+          break;
+        case 59:
+          if (now<=11) {
+            $("#c" + now).text("4");
+            now++;
+          }
+          break;
+        case 97:
+          if (now > 1) now = now - 1;
+          break;
+        case 102:
+          if (now > 11) submit();
+          break;
+      };
+      fresh();
+    });
+    fresh();
