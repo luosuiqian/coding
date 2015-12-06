@@ -84,7 +84,7 @@ block content
       "C9.因剧情联想到生活（本评论者有没有从剧情内容而联想到现实生活） 1=没有(J) 2=有(K)",
       "C10.想知道剧情发展（本评论者是否想知道后面剧情的发展） 1=没有(J) 2=有(K)",
       "C11.情感类型（一条短评的主要情感表达类型最主要的依据是整体语义，并非某种情感的词汇或句子数量。） 0=没有表达(H) 1=满意-高兴(J) 2=厌恶-恐惧(K) 3=强硬-愤怒(L) 4=失望-悲伤(;)",
-      "提交(F)",
+      "请确认后提交",
     ];
     var fresh = function() {
       if (1<=now && now<=12) {
@@ -94,11 +94,18 @@ block content
         for (var i=1;i<str.length;i++) {
           cho += str[i] + "&nbsp;&nbsp;&nbsp;&nbsp;";
         }
-        cho += "上一题(A)";
+        cho += "上一题(A)&nbsp;&nbsp;&nbsp;&nbsp;下一题(S)&nbsp;&nbsp;&nbsp;&nbsp;提交(F)";
         $("#choice").html(cho);
       }
     };
     var submit = function() {
+      for (var i=1;i<=11;i++) {
+        st = "#c" + i;
+        if ($(st).text() == "") {
+          alert("还没全做完，不能提交！");
+          return;
+        }
+      }
       $.ajax({
         url: "#{url}",
         data: {C1: $("#c1").text(), C2: $("#c2").text(), C3: $("#c3").text(), C4: $("#c4").text(),
@@ -116,40 +123,76 @@ block content
     $(document).keypress(function(e) {
       switch (e.which) {
         case 104:
-          if (now<=11) {
+          if (1<=now && now<=11) {
             $("#c" + now).text("0");
             now++;
           }
           break;
         case 106:
-          if (now<=11) {
+          if (1<=now && now<=11) {
             $("#c" + now).text("1");
             now++;
           }
           break;
         case 107:
-          if (now<=11) {
+          if (1<=now && now<=11) {
             $("#c" + now).text("2");
             now++;
           }
           break;
         case 108:
-          if (now<=11) {
+          if (1<=now && now<=11) {
             $("#c" + now).text("3");
             now++;
           }
           break;
         case 59:
-          if (now<=11) {
+          if (1<=now && now<=11) {
             $("#c" + now).text("4");
             now++;
           }
           break;
         case 97:
-          if (now > 1) now = now - 1;
+          if (1<now && now<=12) now = now - 1;
+          break;
+        case 115:
+          if (1<=now && now<12) now = now + 1;
           break;
         case 102:
-          if (now > 11) submit();
+          submit();
+          break;
+        case 49:
+          now = 1;
+          break;
+        case 50:
+          now = 2;
+          break;
+        case 51:
+          now = 3;
+          break;
+        case 52:
+          now = 4;
+          break;
+        case 53:
+          now = 5;
+          break;
+        case 54:
+          now = 6;
+          break;
+        case 55:
+          now = 7;
+          break;
+        case 56:
+          now = 8;
+          break;
+        case 57:
+          now = 9;
+          break;
+        case 48:
+          now = 10;
+          break;
+        case 45:
+          now = 11;
           break;
       };
       fresh();
