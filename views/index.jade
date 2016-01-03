@@ -14,7 +14,16 @@ block content
             th 年份
             th 国家
             th 评论数
-            th 已完成
+            - all = 0
+            - a = 0
+            - b = 0
+            - for (var i=0;i<play.length;i++)
+              - all += 1
+              if (play[i].finished > 0)
+                - a += 1
+              if (play[i].finished == 40)
+                - b += 1
+            th 已完成( #{b} / #{a} / #{all} )
             th 总数
             th 网址
         tbody
