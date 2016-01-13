@@ -53,7 +53,9 @@ app.use(cCheck.notFound);
 
 app.start = function () {
   app.listen(app.get('port'), function() {
-    console.log("Express server listening on port %d", app.get('port'));
+    // console.log("Express server listening on port %d", app.get('port'));
+	console.log("网站已经开启，请打开浏览器，输入网址 127.0.0.1");
+	console.log("如果想关闭网站，请按 Control + c");
   });
 };
 
