@@ -114,6 +114,12 @@ block content
         cho += "上一题(A)&nbsp;&nbsp;&nbsp;&nbsp;下一题(S)&nbsp;&nbsp;&nbsp;&nbsp;提交(F)";
         $("#choice").html(cho);
       }
+      for (var i=1;i<=11;i++) {
+        $("#c" + i).removeClass("info");
+      }
+      if (1<=now && now<=11) {
+        $("#c" + now).addClass("info");
+      }
     };
     var submit = function() {
       for (var i=1;i<=11;i++) {
