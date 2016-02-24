@@ -45,7 +45,7 @@ block content
               td= play[i].year
               td= play[i].country
               td= play[i].comment
-              td= play[i].finished
+              td(class=play[i].finished==play[i].total?"success":(play[i].finished==0?"warning":"danger"))= play[i].finished
               td= play[i].total
               td
                 a(href=play[i].url, target='_blank')
