@@ -20,7 +20,7 @@ block content
             td= play[id-1].id
             td= play[id-1].name
             td= play[id-1].year
-            td= play[id-1].country
+            td= (play[id-1].country == 1?"美国":"韩国")
             td= play[id-1].comment
             td
               a(role="button", href="/play/" + id, class="btn btn-primary")
@@ -111,7 +111,7 @@ block content
         for (var i=1;i<str.length;i++) {
           cho += str[i] + "&nbsp;&nbsp;&nbsp;&nbsp;";
         }
-        cho += "上一题(A)&nbsp;&nbsp;&nbsp;&nbsp;下一题(S)&nbsp;&nbsp;&nbsp;&nbsp;提交(F)";
+        cho += "上一题(A)&nbsp;&nbsp;&nbsp;&nbsp;下一题(S)&nbsp;&nbsp;&nbsp;&nbsp;上一条(W)&nbsp;&nbsp;&nbsp;&nbsp;提交(F)";
         $("#choice").html(cho);
       }
       for (var i=1;i<=11;i++) {
@@ -216,6 +216,9 @@ block content
           break;
         case 45:
           now = 11;
+          break;
+        case 119:
+          $(location).attr('href', "/comment/#{id}/#{commentid>1?commentid-1:1}");
           break;
       };
       fresh();
