@@ -45,6 +45,7 @@ block content
             th C9
             th C10
             th C11
+            th C12
         tbody
           - for (var i=0;i<comment.length;i++)
             if comment[i].showid == id && comment[i].commentid == commentid
@@ -65,13 +66,16 @@ block content
                 td(id='c9')= comment[i].C9
                 td(id='c10')= comment[i].C10
                 td(id='c11')= comment[i].C11
+                td(id='c12')= comment[i].C12
     h3(id='prob')
     p(id='hint')
     p(id='choice')
   
   - var url = '/comment/' + id + '/' + commentid
   script(type='text/javascript').
-    var now = 1;
+    var now = 12;
+    var c12 = 0;
+    if ($("#c12").text() != "") c12 = parseInt($("#c12").text())
     var words = [
       "",
       "C1.身体特征，包括：外貌、穿着、身材、声音、气质（只讨论外形、声音等身体特征） 1=不认可(J) 2=没提及(K) 3=认可(L)",
@@ -85,6 +89,7 @@ block content
       "C9.因剧情联想到生活（本评论者有没有从剧情内容而联想到现实生活） 1=没有(J) 2=有(K)",
       "C10.想知道剧情发展（本评论者是否想知道后面剧情的发展） 1=没有(J) 2=有(K)",
       "C11.情感类型（一条短评的主要情感表达类型最主要的依据是整体语义，并非某种情感的词汇或句子数量。） 0=没有表达(H) 1=满意-高兴(J) 2=厌恶-恐惧(K) 3=强硬-愤怒(L) 4=失望-悲伤(;)",
+      "C12.情感频次（主要考察目标短评中有多少个分句表达了情感。） 加1(J) 加3(K) 减1(U) 减3(I) 确定(L)",
       "请确认后提交",
     ];
     var hints = [
@@ -100,10 +105,11 @@ block content
       "联想到现实包括联想到自身经历和其他现实问题两种。主要表述为“让我想到自己…”，或者直接阐述某个现实问题。",
       "急于知道后续发展的常常表述为“一口气看完”、“坐等下一季”等急迫、期待的情绪。",
       "0：没有情感表达<br />1：满意-高兴的具体情感描述：满意、满怀希望、平静、感激、雀跃、轻快、友好、和蔼可亲、享受、快乐、幸福、狂喜、喜悦、欢乐、得意、欣喜、高兴<br />2：厌恶-恐惧的具体情感描述：利害、犹豫、勉强、羞愧、疑惧、颤抖、焦虑、神圣、惊恐、失去勇气、恐慌、恐怖、惊悚、高度恐惧<br />3：强硬-愤怒的具体情感描述：苦恼、激动、动怒、恼火、不安、烦恼、怨恨、不满、冒犯、挫败、气急败坏、敌意、愤怒、憎恶、仇恨、生气、嫌恶、讨厌、厌恶、愤怒、轻视、憎恨、火冒三丈、愤怒。狂怒、勃然大怒、义愤填膺<br />4：失望-悲伤的具体情感描述：气馁、伤悲、感伤、沮丧、悲伤、伤心、阴郁、宿命论、忧伤、悲痛、悲怜、悲苦、痛苦、悲哀、苦闷、闷闷不乐、垂头丧气",
+      "分句是指由分隔标点符号分开的文字或文字组合，这些标点符号包括句号、感叹号、问号、逗号、分号、冒号、破折号、省略号（……）。<br />多个分隔标点连用，如 “这部剧的烂笔之处就是join和 joc kiss的那部分！！完全不能接受！！” 表示两个分句，而非4个。<br />如果短评中出现排比句，且整体表达一个意义，则将这组排比句看做一次情感表达。每个分句中，若包含4种基本情感类型、表情符号、脏话或谩骂、人身攻击等都计为一次情感表达。",
       "请确认后提交",
     ];
     var fresh = function() {
-      if (1<=now && now<=12) {
+      if (1<=now && now<=13) {
         str = words[now].split(" ");
         $("#prob").text(str[0]);
         $("#hint").html(hints[now]);
@@ -114,15 +120,15 @@ block content
         cho += "上一题(A)&nbsp;&nbsp;&nbsp;&nbsp;下一题(S)&nbsp;&nbsp;&nbsp;&nbsp;上一条(W)&nbsp;&nbsp;&nbsp;&nbsp;提交(F)";
         $("#choice").html(cho);
       }
-      for (var i=1;i<=11;i++) {
+      for (var i=1;i<=12;i++) {
         $("#c" + i).removeClass("info");
       }
-      if (1<=now && now<=11) {
+      if (1<=now && now<=12) {
         $("#c" + now).addClass("info");
       }
     };
     var submit = function() {
-      for (var i=1;i<=11;i++) {
+      for (var i=1;i<=12;i++) {
         st = "#c" + i;
         if ($(st).text() == "") {
           alert("还没全做完，不能提交！");
@@ -133,7 +139,7 @@ block content
         url: "#{url}",
         data: {C1: $("#c1").text(), C2: $("#c2").text(), C3: $("#c3").text(), C4: $("#c4").text(),
                C5: $("#c5").text(), C6: $("#c6").text(), C7: $("#c7").text(), C8: $("#c8").text(),
-               C9: $("#c9").text(), C10: $("#c10").text(), C11: $("#c11").text()},
+               C9: $("#c9").text(), C10: $("#c10").text(), C11: $("#c11").text(), C12: $("#c12").text()},
         type: "POST",
         dataType: "json",
         success: function(m) {
@@ -156,16 +162,27 @@ block content
             $("#c" + now).text("1");
             now++;
           }
+          else if (now == 12) {
+            c12++;
+            $("#c12").text(c12);
+          }
           break;
         case 107:
           if (1<=now && now<=11) {
             $("#c" + now).text("2");
             now++;
           }
+          else if (now == 12) {
+            c12 += 3;
+            $("#c12").text(c12);
+          }
           break;
         case 108:
           if (1<=now && now<=11) {
             $("#c" + now).text("3");
+            now++;
+          }
+          else if (now == 12) {
             now++;
           }
           break;
@@ -175,11 +192,25 @@ block content
             now++;
           }
           break;
+        case 117:
+          if (now == 12) {
+            c12--;
+            if (c12 < 0) c12 = 0;
+            $("#c12").text(c12);
+          }
+          break;
+        case 105:
+          if (now == 12) {
+            c12 -= 3;
+            if (c12 < 0) c12 = 0;
+            $("#c12").text(c12);
+          }
+          break;
         case 97:
-          if (1<now && now<=12) now = now - 1;
+          if (1<now && now<=13) now = now - 1;
           break;
         case 115:
-          if (1<=now && now<12) now = now + 1;
+          if (1<=now && now<13) now = now + 1;
           break;
         case 102:
           submit();
@@ -216,6 +247,9 @@ block content
           break;
         case 45:
           now = 11;
+          break;
+        case 61:
+          now = 12;
           break;
         case 119:
           $(location).attr('href', "/comment/#{id}/#{commentid>1?commentid-1:1}");

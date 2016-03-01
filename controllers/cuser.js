@@ -11,7 +11,7 @@ exports.indexGet = function (req, res) {
       }
       for (var i = 0; i < comment.length; i++) {
         play[comment[i].showid - 1].total++;
-        if (comment[i].C1 != null) {
+        if (comment[i].C12 != null) {
           play[comment[i].showid - 1].finished++;
         }
       }
@@ -69,6 +69,7 @@ exports.commentPost = function (req, res) {
   coding.C9 = req.body.C9;
   coding.C10 = req.body.C10;
   coding.C11 = req.body.C11;
+  coding.C12 = req.body.C12;
   User.update(showid, commentid, coding, function (err) {
     if (commentid < maxCommentId) {
       commentid++;
