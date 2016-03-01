@@ -39,7 +39,7 @@ block content
           - for (var i=0;i<play.length;i++)
             tr
               td(id="p" + play[i].id, name="p" + play[i].id)= play[i].id
-              td
+              td(class=play[i].planned==1?"info":"")
                 a(href="/play/" + play[i].id)
                   = play[i].name
               td= play[i].year

@@ -57,16 +57,16 @@ block content
                 td= comment[i].score
                 td= comment[i].usefulness
                 td= comment[i].text
-                td= comment[i].C1
-                td= comment[i].C2
-                td= comment[i].C3
-                td= comment[i].C4
-                td= comment[i].C5
-                td= comment[i].C6
-                td= comment[i].C7
-                td= comment[i].C8
-                td= comment[i].C9
-                td= comment[i].C10
-                td= comment[i].C11
+                td(class=(comment[i].C1 <= 0 || comment[i].C1 >= 4)?"danger":"")= comment[i].C1
+                td(class=(comment[i].C2 <= 0 || comment[i].C2 >= 4)?"danger":"")= comment[i].C2
+                td(class=(comment[i].C3 <= 0 || comment[i].C3 >= 4)?"danger":"")= comment[i].C3
+                td(class=(comment[i].C4 <= 0 || comment[i].C4 >= 4)?"danger":"")= comment[i].C4
+                td(class=(comment[i].C5 <= 0 || comment[i].C5 >= 4)?"danger":"")= comment[i].C5
+                td(class=(comment[i].C6 <= 0 || comment[i].C6 >= 4)?"danger":"")= comment[i].C6
+                td(class=(comment[i].C7 <= 0 || comment[i].C7 >= 3)?"danger":"")= comment[i].C7
+                td(class=(comment[i].C8 <= 0 || comment[i].C8 >= 3)?"danger":"")= comment[i].C8
+                td(class=(comment[i].C9 <= 0 || comment[i].C9 >= 3)?"danger":"")= comment[i].C9
+                td(class=(comment[i].C10 <= 0 || comment[i].C10 >= 3)?"danger":"")= comment[i].C10
+                td(class=(comment[i].C11 <= -1 || comment[i].C11 >= 5)?"danger":"")= comment[i].C11
                 td= comment[i].C12
 

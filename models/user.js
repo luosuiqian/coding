@@ -1,7 +1,7 @@
 var conn = require('./db').getConnection;
 
 exports.getPlay = function (callback) {
-  conn().query('SELECT id, name, url, year, country, comment FROM play',
+  conn().query('SELECT id, name, url, year, country, comment, planned FROM play',
                function (err, results) {
     if (err) throw err;
     return callback(results);
