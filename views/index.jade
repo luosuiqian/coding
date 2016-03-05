@@ -49,7 +49,7 @@ block content
               td(class=play[i].planned==1?"info":"")
                 a(href="/play/" + play[i].id)
                   = play[i].name
-              td= play[i].year
+              td(class=play[i].watched==1?"info":"")= play[i].year
               td= (play[i].country == 1?"美国":"韩国")
               td= play[i].comment
               td(class=play[i].finished==play[i].total?"success":(play[i].finished==0?"warning":"danger"))= play[i].finished
