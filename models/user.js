@@ -1,7 +1,7 @@
 var conn = require('./db').getConnection;
 
 exports.getPlay = function (callback) {
-  conn().query('SELECT id, name, url, year, country, comment, planned FROM play',
+  conn().query('SELECT id, name, url, year, country, comment, planned FROM play order by id',
                function (err, results) {
     if (err) throw err;
     return callback(results);
@@ -11,7 +11,7 @@ exports.getPlay = function (callback) {
 exports.getComment = function (callback) {
   conn().query('SELECT showid, commentid, name, score, text, usefulness, \
                C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12 \
-               FROM comment',
+               FROM comment order by showid, commentid',
                function (err, results) {
     if (err) throw err;
     return callback(results);

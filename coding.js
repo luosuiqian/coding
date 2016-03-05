@@ -47,6 +47,10 @@ app.post('/comment/:showid/:commentid', [
   cUser.commentPost,
 ]);
 
+app.get('/individual.csv', [
+  cUser.individualGet,
+]);
+
 //===========================================================================//
 
 app.use(cCheck.notFound);

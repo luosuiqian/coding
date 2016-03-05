@@ -80,3 +80,30 @@ exports.commentPost = function (req, res) {
   });
 };
 
+var iconv = require('iconv-lite');
+
+exports.individualGet = function (req, res) {
+  User.getComment(function (comment) {
+    res.write(iconv.encode("剧集序号;评论序号;评论打分;有用数;", "GBK"));
+    res.write(iconv.encode("身体特征;角色称谓;认识的人;角色认同;角色成败;拥有特征;认同剧情;触动感情;联系生活;剧情发展;情感类型;情感频次\n", "GBK"));
+    for (var i = 0; i < comment.length; i++) {
+      res.write(comment[i].showid + ";");
+      res.write(comment[i].commentid + ";");
+      res.write(comment[i].score + ";");
+      res.write(comment[i].usefulness + ";");
+      res.write(comment[i].C1 + ";");
+      res.write(comment[i].C2 + ";");
+      res.write(comment[i].C3 + ";");
+      res.write(comment[i].C4 + ";");
+      res.write(comment[i].C5 + ";");
+      res.write(comment[i].C6 + ";");
+      res.write(comment[i].C7 + ";");
+      res.write(comment[i].C8 + ";");
+      res.write(comment[i].C9 + ";");
+      res.write(comment[i].C10 + ";");
+      res.write(comment[i].C11 + ";");
+      res.write(comment[i].C12 + "\n");
+    }
+    res.end();
+  });
+};
