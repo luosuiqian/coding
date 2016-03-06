@@ -26,6 +26,17 @@ exports.update = function (showid, commentid, coding, callback) {
   });
 };
 
+exports.getGeneral = function (str, callback) {
+  conn().query('SELECT id, country, featurefilm, action, sciencefiction, comedy, lovestory, family, \
+               crime, history, horror, suspense, venture, music, homosexual, season, episode, period, \
+               score, watching, comment, watched, planned, noe \
+               FROM play where  ' + str + ' order by id',
+               function (err, results) {
+    if (err) throw err;
+    return callback(results);
+  });
+};
+
 exports.getIndividual = function (str, callback) {
   conn().query('SELECT showid, commentid, comment.score, usefulness, \
                C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12 \

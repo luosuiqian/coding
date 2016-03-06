@@ -47,6 +47,10 @@ app.post('/comment/:showid/:commentid', [
   cUser.commentPost,
 ]);
 
+app.get('/general/:condition/:name', [
+  cUser.generalGet,
+]);
+
 app.get('/individual/:condition/:name', [
   cUser.individualGet,
 ]);

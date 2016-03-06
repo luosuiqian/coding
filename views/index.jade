@@ -5,17 +5,27 @@ block headlink
 
 block content
   div(class='container')
-    p
-      a(href="/general.xlsx", target="_blank")
-        | 总表下载（单击下载）
-    p
-      a(href="/individual/true/individual.csv", target="_blank")
-        | 个表下载（右键，链接存储为，再用Excel另存为xlsx格式）
-    p
-      a(href="/individual/country=1%20and%20featurefilm=1/test.csv", target="_blank")
-        | 测试下载（右键，链接存储为，再用Excel另存为xlsx格式）
-    hr
+    h4 下载方法：右键，链接存储为，再用Excel另存为xlsx格式
     div(class='table-responsive')
+      - condition = ["true", "country=0", "country=1", "featurefilm=1", "action=1 or crime=1", "sciencefiction=1 or venture=1", "horror=1 or suspense=1", "comedy=1", "lovestory=1", "family=1", "history=1", "music=1", "homosexual=1"]
+      - name = ["All", "American", "korean", "Drama", "ActionCrime", "FantasyAdventure", "HorrorCrux", "Comedy", "Romance", "Family", "History", "Music", "Homosexual"]
+      table(class='table table-striped table-bordered table-hover')
+        thead
+          tr
+            th &nbsp;
+            th 总表
+            th 个表
+        tbody
+          - for (var i=0;i<condition.length;i++)
+            tr
+              td= name[i]
+              td
+                a(href="/general/" + condition[i] + "/" + name[i] + "_general.csv", target="_blank")
+                  = name[i] + "_general"
+              td
+                a(href="/individual/" + condition[i] + "/" + name[i] + "_individual.csv", target="_blank")
+                  = name[i] + "_individual"
+      hr
       table(class='table table-striped table-bordered table-hover')
         tbody
           tr
