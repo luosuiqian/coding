@@ -20,7 +20,7 @@ block content
             td= play[id-1].id
             td= play[id-1].name
             td= play[id-1].year
-            td= (play[id-1].country == 1?"美国":"韩国")
+            td= (play[id-1].country == 0?"美国":"韩国")
             td= play[id-1].comment
             td
               a(role="button", href="/", class="btn btn-primary")

@@ -83,7 +83,8 @@ exports.commentPost = function (req, res) {
 var iconv = require('iconv-lite');
 
 exports.individualGet = function (req, res) {
-  User.getComment(function (comment) {
+  var condition = req.params.condition;
+  User.getIndividual(condition, function (comment) {
     res.write(iconv.encode("剧集序号;评论序号;评论打分;有用数;", "GBK"));
     res.write(iconv.encode("身体特征;角色称谓;认识的人;角色认同;角色成败;拥有特征;认同剧情;触动感情;联系生活;剧情发展;情感类型;情感频次\n", "GBK"));
     for (var i = 0; i < comment.length; i++) {

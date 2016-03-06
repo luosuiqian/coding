@@ -1,7 +1,7 @@
 var conn = require('./db').getConnection;
 
 exports.getPlay = function (callback) {
-  conn().query('SELECT id, name, url, year, country, comment, planned, watched FROM play order by id',
+  conn().query('SELECT id, name, url, year, country, comment, B1B11, B12 FROM play order by id',
                function (err, results) {
     if (err) throw err;
     return callback(results);
@@ -23,6 +23,16 @@ exports.update = function (showid, commentid, coding, callback) {
                [coding, showid, commentid], function (err) {
     if (err) throw err;
     return callback(null);
+  });
+};
+
+exports.getIndividual = function (str, callback) {
+  conn().query('SELECT showid, commentid, comment.score, usefulness, \
+               C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12 \
+               FROM play, comment where id = showid and ' + str + ' order by showid, commentid',
+               function (err, results) {
+    if (err) throw err;
+    return callback(results);
   });
 };
 

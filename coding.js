@@ -47,7 +47,7 @@ app.post('/comment/:showid/:commentid', [
   cUser.commentPost,
 ]);
 
-app.get('/individual.csv', [
+app.get('/individual/:condition/:name', [
   cUser.individualGet,
 ]);
 
