@@ -143,8 +143,8 @@ exports.generalGet = function (req, res) {
 exports.individualGet = function (req, res) {
   var condition = req.params.condition;
   User.getIndividual(condition, function (comment) {
-    res.write("NO1;NO2;Score;Appearance;Salutation;Acknowledge;IDC;Success;Wishful ID;IDP;EmotionP;AssociatedMemoryP;");
-    res.write("Curiousness;Emotion Type;Emotion Strength;PSI;Identification;Transportation;Identificaiton2\n");
+    res.write("NO1;NO2;Score;Appearance;Salutation;Acknowledge;IDC;Success;WishfulID;IDP;EmotionP;AssociatedMemoryP;");
+    res.write("Curiousness;EmotionType;EmotionStrength;PSI;Identification;Transportation;Identificaiton2\n");
     for (var i = 0; i < comment.length; i++) {
       res.write(comment[i].showid + ";");
       res.write(comment[i].commentid + ";");

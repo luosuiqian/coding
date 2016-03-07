@@ -5,10 +5,11 @@ block headlink
 
 block content
   div(class='container')
-    h4 下载方法：点开，按 Command + S；或者右键，链接存储为
+    h4 下载方法：右键，链接存储为
     div(class='table-responsive')
       - condition = ["true", "country=0", "country=1", "featurefilm=1", "action=1 or crime=1", "sciencefiction=1 or venture=1", "horror=1 or suspense=1", "comedy=1", "lovestory=1", "family=1", "history=1", "music=1", "homosexual=1"]
-      - name = ["All", "American", "korean", "Drama", "ActionCrime", "FantasyAdventure", "HorrorCrux", "Comedy", "Romance", "Family", "History", "Music", "Homosexual"]
+      - name = ["全部", "美剧", "韩剧", "剧情", "动作犯罪", "科幻奇幻冒险", "恐怖惊悚悬疑", "喜剧", "爱情", "家庭", "历史古装", "音乐歌舞", "同性"]
+      - nameEn = ["All", "American", "korean", "Drama", "ActionCrime", "FantasyAdventure", "HorrorCrux", "Comedy", "Romance", "Family", "History", "Music", "Homosexual"]
       table(class='table table-striped table-bordered table-hover')
         thead
           tr
@@ -16,15 +17,23 @@ block content
             th 总表
             th 个表
         tbody
+          tr
+            td 格式文件
+            td
+              a(href="/format/格式_总体变量.tpf", target="_blank") 格式_总体变量
+            td
+              a(href="/format/格式_个体变量.tpf", target="_blank") 格式_个体变量
+          tr
+            td(colspan=3, class="success") &nbsp;
           - for (var i=0;i<condition.length;i++)
             tr
               td= name[i]
               td
-                a(href="/general/" + condition[i] + "/" + name[i] + "_general.csv", target="_blank")
-                  = name[i] + "_general"
+                a(href="/general/" + condition[i] + "/" + name[i] + "_总体变量.csv", target="_blank")
+                  = name[i] + "_总体变量"
               td
-                a(href="/individual/" + condition[i] + "/" + name[i] + "_individual.csv", target="_blank")
-                  = name[i] + "_individual"
+                a(href="/individual/" + condition[i] + "/" + name[i] + "_个体变量.csv", target="_blank")
+                  = name[i] + "_个体变量"
       hr
       table(class='table table-striped table-bordered table-hover')
         tbody
