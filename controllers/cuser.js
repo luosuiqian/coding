@@ -144,7 +144,8 @@ exports.individualGet = function (req, res) {
   var condition = req.params.condition;
   User.getIndividual(condition, function (comment) {
     res.write("NO1;NO2;Score;Appearance;Salutation;Acknowledge;IDC;Success;WishfulID;IDP;EmotionP;AssociatedMemoryP;");
-    res.write("Curiousness;EmotionType;EmotionStrength;PSI;Identification;Transportation;Identificaiton2\n");
+    res.write("Curiousness;EmotionType;EmotionStrength;PSI;Identification;Transportation;Identificaiton2;");
+    res.write("EmotionType_1;EmotionType_2;EmotionType_3;EmotionType_4;EmotionType1;EmotionType1_1;EmotionType1_2\n");
     for (var i = 0; i < comment.length; i++) {
       res.write(comment[i].showid + ";");
       res.write(comment[i].commentid + ";");
@@ -169,8 +170,46 @@ exports.individualGet = function (req, res) {
       res.write(C13 + ";");
       res.write(C14 + ";");
       res.write(C15 + ";");
-      res.write(C16 + "\n");
+      res.write(C16 + ";");
+      
+      var ET_1 = 0;
+      if (comment[i].C11 == 0) ET_1 = 1;
+      else ET_1 = 0;
+      res.write(ET_1 + ";");
+      
+      var ET_2 = 0;
+      if (comment[i].C11 == 1) ET_2 = 1;
+      else ET_2 = 0;
+      res.write(ET_2 + ";");
+      
+      var ET_3 = 0;
+      if (comment[i].C11 == 2) ET_3 = 1;
+      else ET_3 = 0;
+      res.write(ET_3 + ";");
+      
+      var ET_4 = 0;
+      if (comment[i].C11 == 3) ET_4 = 1;
+      else ET_4 = 0;
+      res.write(ET_4 + ";");
+      
+      var EmotionType1 = 0;
+      if (comment[i].C11 == 0) EmotionType1 = 0;
+      else if (comment[i].C11 == 1) EmotionType1 = 1;
+      else EmotionType1 = 2;
+      res.write(EmotionType1 + ";");
+      
+      var EmotionType1_1 = 0;
+      if (EmotionType1 == 0) EmotionType1_1 = 1;
+      else EmotionType1_1 = 0;
+      res.write(EmotionType1_1 + ";");
+      
+      var EmotionType1_2 = 0;
+      if (EmotionType1 == 1) EmotionType1_2 = 1;
+      else EmotionType1_2 = 0;
+      res.write(EmotionType1_2 + "\n");
+      
     }
     res.end();
   });
 };
+
