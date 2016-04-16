@@ -39,7 +39,10 @@ exports.getGeneral = function (str, callback) {
 
 exports.getIndividual = function (str, callback) {
   conn().query('SELECT showid, commentid, comment.score, usefulness, \
-               C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12 \
+               C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, \
+               country, featurefilm, action, sciencefiction, comedy, lovestory, family, \
+               crime, history, horror, suspense, venture, music, homosexual, season, episode, period, \
+               play.comment, noe \
                FROM play, comment where id = showid and ' + str + ' order by showid, commentid',
                function (err, results) {
     if (err) throw err;

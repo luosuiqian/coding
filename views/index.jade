@@ -16,15 +16,8 @@ block content
             th &nbsp;
             th 总表
             th 个表
+            th 个表_打分不为零
         tbody
-          tr
-            td 格式文件
-            td
-              a(href="/format/格式_总体变量.tpf", target="_blank") 格式_总体变量
-            td
-              a(href="/format/格式_个体变量.tpf", target="_blank") 格式_个体变量
-          tr
-            td(colspan=3, class="success") &nbsp;
           - for (var i=0;i<condition.length;i++)
             tr
               td= name[i]
@@ -34,6 +27,9 @@ block content
               td
                 a(href="/individual/" + condition[i] + "/" + name[i] + "_个体变量.csv", target="_blank")
                   = name[i] + "_个体变量"
+              td
+                a(href="/individual/" + condition[i] + " and comment.score != 0/" + name[i] + "_个体变量_打分不为零.csv", target="_blank")
+                  = name[i] + "_个体变量_打分不为零"
       hr
       table(class='table table-striped table-bordered table-hover')
         tbody

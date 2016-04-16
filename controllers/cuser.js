@@ -145,7 +145,10 @@ exports.individualGet = function (req, res) {
   User.getIndividual(condition, function (comment) {
     res.write("NO1;NO2;Score;Appearance;Salutation;Acknowledge;IDC;Success;WishfulID;IDP;EmotionP;AssociatedMemoryP;");
     res.write("Curiousness;EmotionType;EmotionStrength;PSI;Identification;Transportation;Identificaiton2;");
-    res.write("EmotionType_1;EmotionType_2;EmotionType_3;EmotionType_4;EmotionType1;EmotionType1_1;EmotionType1_2\n");
+    res.write("EmotionType_1;EmotionType_2;EmotionType_3;EmotionType_4;EmotionType1;EmotionType1_1;EmotionType1_2;");
+    res.write("Country;Drama;Action;Crime;ActionCrime;Fantasy;Adventure;FantasyAdventure;Horror;Crux;HorrorCrux;");
+    res.write("Comedy;Romance;Family;History;Music;Homosexual;Season;Episode;Time;NOE;Noc\n");
+    
     for (var i = 0; i < comment.length; i++) {
       res.write(comment[i].showid + ";");
       res.write(comment[i].commentid + ";");
@@ -161,7 +164,14 @@ exports.individualGet = function (req, res) {
       res.write(comment[i].C9 + ";");
       res.write(comment[i].C10 + ";");
       res.write(comment[i].C11 + ";");
-      res.write(comment[i].C12 + ";");
+      
+      var EmotionStrength = 0;
+      if (comment[i].C12 == 0) EmotionStrength = 1;
+      if (comment[i].C12 == 1) EmotionStrength = 2;
+      if (comment[i].C12 == 2) EmotionStrength = 3;
+      if (comment[i].C12 == 3) EmotionStrength = 4;
+      if (comment[i].C12 >= 4) EmotionStrength = 5;
+      res.write(EmotionStrength + ";");
       
       var C13 = parseInt(comment[i].C2) + parseInt(comment[i].C3)
       var C14 = parseInt(comment[i].C1) + parseInt(comment[i].C4) + parseInt(comment[i].C5) + parseInt(comment[i].C6)
@@ -206,7 +216,42 @@ exports.individualGet = function (req, res) {
       var EmotionType1_2 = 0;
       if (EmotionType1 == 1) EmotionType1_2 = 1;
       else EmotionType1_2 = 0;
-      res.write(EmotionType1_2 + "\n");
+      res.write(EmotionType1_2 + ";");
+      
+      
+      
+      res.write(comment[i].country + ";");
+      res.write(comment[i].featurefilm + ";");
+      
+      res.write(comment[i].action + ";");
+      res.write(comment[i].crime + ";");
+      
+      var actionCrime = OR(comment[i].action, comment[i].crime);
+      res.write(actionCrime + ";");
+      
+      res.write(comment[i].sciencefiction + ";");
+      res.write(comment[i].venture + ";");
+      
+      var sciencefictionVenture = OR(comment[i].sciencefiction, comment[i].venture);
+      res.write(sciencefictionVenture + ";");
+      
+      res.write(comment[i].horror + ";");
+      res.write(comment[i].suspense + ";");
+      
+      var horrorSuspense = OR(comment[i].horror, comment[i].suspense);
+      res.write(horrorSuspense + ";");
+      
+      res.write(comment[i].comedy + ";");
+      res.write(comment[i].lovestory + ";");
+      res.write(comment[i].family + ";");
+      res.write(comment[i].history + ";");
+      res.write(comment[i].music + ";");
+      res.write(comment[i].homosexual + ";");
+      res.write(comment[i].season + ";");
+      res.write(comment[i].episode + ";");
+      res.write(comment[i].period + ";");
+      res.write(comment[i].noe + ";");
+      res.write(comment[i].comment + "\n");
       
     }
     res.end();
